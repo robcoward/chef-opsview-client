@@ -6,9 +6,7 @@ register and update host entries on the OpsView master.
 
 Attributes
 ----------
-TODO: List your cookbook attributes here.
 
-e.g.
 #### opsview_client::default
 <table>
   <tr>
