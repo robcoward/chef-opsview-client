@@ -20,7 +20,7 @@
 include_recipe "opsview_client"
 
 opsview_client node['fqdn'] do 
-	api_user 'NVM'
+	api_user 'userid'
 	api_password 'passw0rd'
 	api_protocol 'http'
 	api_port 80

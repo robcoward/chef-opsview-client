@@ -74,6 +74,24 @@ Just include `opsview_client` in your node's `run_list`:
 }
 ```
 
+#### LWRP
+
+Include this resource in your recipe to have the host dynamically registered with OpsView.
+
+```ruby
+opsview_client node['fqdn'] do 
+  api_user 'userid'
+  api_password 'passw0rd'
+  api_protocol 'http'
+  api_port 80
+  ip node['ipaddress']
+  hostgroup 'Test_Hostgroup'
+  hostalias 'Chef client test'
+  hosttemplates node['opsview']['hosttemplates']
+  reload_opsview 'false'
+end
+```
+
 Contributing
 ------------
 1. Fork the repository on Github
