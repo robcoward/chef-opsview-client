@@ -33,4 +33,4 @@ attribute :hostgroup, :kind_of => String, :required => true
 attribute :hostalias, :kind_of => String, :default => ""
 attribute :hosttemplates, :kind_of => [Array, Hash], :default => [ 'Network - Base' ]
 attribute :keywords, :kind_of => [Array, Hash]
-attribute :reload_opsview, :kind_of => String, :default => node['opsview']['reload_opsview']
+attribute :reload_opsview, :kind_of => [TrueClass, FalseClass], :default => node['opsview']['reload_opsview']

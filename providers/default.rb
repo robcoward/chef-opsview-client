@@ -28,59 +28,91 @@ require 'yaml'
 @errorOccurred = false
 #use_inline_resources if defined?(use_inline_resources)
 
+action :add
+  new_resource.updated_by_last_action(do_add_or_update(:add))
+end
+
 action :add_or_update do
+  new_resource.updated_by_last_action(do_add_or_update(:add_or_update))
+end
+
+action :update do
+  new_resource.updated_by_last_action(do_add_or_update(:update))
+end
+
+def do_add_or_update(resource_action)
   if @device.nil?
-    @updated_json = { }
-    node['opsview']['default_node'].each_pair do |key,value|
-      @updated_json[key] = value
+    if resource_action == :update
+      Chef::Log.info( "#{node['name']} is not registered - skipping.")
+      return false
+    else
+      updated_json = new_registration()
+      do_update = true
     end
-    do_update = true
   else
-    @updated_json = @device
-    do_update = false
+    if resource_action == :add 
+      Chef::Log.info( "#{node['name']} is already registered - skipping.")
+      return false
+    else
+      updated_json = update_host_details(@device)
+      do_update = @device == updated_json ? false : true
+    end 
   end
 
+  if do_update
+    put updated_json
 
-  @updated_json["hostgroup"] = { "name" => @new_resource.hostgroup }
-  @updated_json["name"] = @new_resource.device_title
-  @updated_json["ip"] = @new_resource.ip
+    if @new_resource.reload_opsview
+      Chef::Log.info( "Configured to reload opsview")
+      do_reload_opsview
+    else
+      Chef::Log.info( "Configured NOT to reload opsview" )
+    end
+  end
 
-  @updated_json["hosttemplates"] = []
+  do_update
+end
+
+def new_registration
+  node_json = { }
+  node['opsview']['default_node'].each_pair do |key,value|
+    node_json[key] = value
+  end
+
+  update_host_details(node_json)
+end
+
+def update_host_details(node_json)
+  node_json["name"] = @new_resource.device_title
+  node_json["ip"] = @new_resource.ip
+
+  if not @new_resource.hostalias.to_s.empty?
+    node_json["alias"] = @new_resource.hostalias
+  end
+
+  node_json["hostgroup"] = { "name" => @new_resource.hostgroup }
+  node_json["hosttemplates"] = []
   if @new_resource.hosttemplates
     @new_resource.hosttemplates.each do |ht|
-      @updated_json["hosttemplates"] << {:name => ht}
+      node_json["hosttemplates"] << {:name => ht}
     end
   end
 
   if not @new_resource.monitored_by.to_s.empty?
-    @updated_json["monitored_by"] = { "name" => @new_resource.monitored_by }
+    node_json["monitored_by"] = { "name" => @new_resource.monitored_by }
   end
 
-  if not @new_resource.hostalias.to_s.empty?
-    @updated_json["alias"] = @new_resource.hostalias
-  end
-
-  @updated_json["keywords"] = []
+  node_json["keywords"] = []
   if @new_resource.keywords
     @new_resource.keywords.each do |kw|
-      @updated_json["keywords"] << {:name => kw}
+      node_json["keywords"] << {:name => kw}
     end
   end
 
-  @updated_json["hostattributes"] = get_host_attributes()
+  node_json["hostattributes"] = get_host_attributes()
 
-  put @updated_json
-
-  if @new_resource.reload_opsview == "true" and do_update
-    Chef::Log.info( "Configured to reload opsview")
-    do_reload_opsview
-  else
-    Chef::Log.info( "Configured NOT to reload opsview" )
-  end
-
-  new_resource.updated_by_last_action(do_update)
+  node_json
 end
-
 
 # Check the OpsView Server to see the current state of the
 # Device
@@ -93,9 +125,7 @@ end
   
 def api_url
   n = @new_resource
-  api_host = @new_resource.api_host || node['zenoss']['client']['server']
-  api_port = @new_resource.api_port || node['zenoss']['client']['server_port']
-  url = "#{n.api_protocol}://#{api_host}:#{api_port}/rest"
+  url = "#{n.api_protocol}://#{n.api_host}:#{n.api_port}/rest"
 end
 
 def get_token
