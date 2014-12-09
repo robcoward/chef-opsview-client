@@ -28,7 +28,7 @@ require 'yaml'
 @errorOccurred = false
 #use_inline_resources if defined?(use_inline_resources)
 
-action :add
+action :add do
   new_resource.updated_by_last_action(do_add_or_update(:add))
 end
 
