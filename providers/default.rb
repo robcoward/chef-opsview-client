@@ -43,7 +43,7 @@ end
 def do_add_or_update(resource_action)
   if @device.nil?
     if resource_action == :update
-      Chef::Log.info( "#{node['name']} is not registered - skipping.")
+      Chef::Log.info( "#{@new_resource.name} is not registered - skipping.")
       return false
     else
       updated_json = new_registration()
@@ -51,7 +51,7 @@ def do_add_or_update(resource_action)
     end
   else
     if resource_action == :add 
-      Chef::Log.info( "#{node['name']} is already registered - skipping.")
+      Chef::Log.info( "#{@new_resource.name} is already registered - skipping.")
       return false
     else
       updated_json = update_host_details(@device)
