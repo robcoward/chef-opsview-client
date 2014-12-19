@@ -17,6 +17,8 @@
 # limitations under the License.
 #
 
+chef_gem 'rest-client'
+
 case node['platform_family']
 when 'windows'
         include_recipe 'opsview_client::setup_windows_agent'

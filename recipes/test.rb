@@ -28,5 +28,5 @@ opsview_client node['fqdn'] do
 	hostgroup 'Test_Hostgroup'
 	hostalias 'Chef client test'
 	hosttemplates node['opsview']['hosttemplates']
-	reload_opsview 'false'
+	reload_opsview false
 end

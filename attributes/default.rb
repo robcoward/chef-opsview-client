@@ -23,9 +23,11 @@ default['opsview']['server_protocol'] = 'https'
 
 default['opsview']['hosttemplates'] = [ 'Network - Base' ]
 
-default['opsview']['reload_opsview'] = "true"
+default['opsview']['reload_opsview'] = true
 
 default['opsview']['exclude_fs_type'] = [ 'usbfs', 'devpts', 'devtmpfs', 'binfmt_misc', 'proc', 'rootfs', 'sysfs', 'tmpfs' ]
+default['opsview']['optional_attributes'] = [ 'MAC', 'CHEFSERVER' ]
+
 
 default['opsview']['default_node']['flap_detection_enabled'] = "1"
 default['opsview']['default_node']['snmpv3_privprotocol'] = nil
@@ -59,7 +61,7 @@ default['opsview']['default_node']['use_nmis'] = "0"
 default['opsview']['default_node']['rancid_connection_type'] = "ssh"
 default['opsview']['default_node']['snmpv3_authprotocol'] = nil
 default['opsview']['default_node']['rancid_username'] = nil
-default['opsview']['default_node']['rancid_password'] = nil
+default['opsview']['default_node']['rancid_password'] = ''
 default['opsview']['default_node']['check_command'] = { "name" => "ping"}
 default['opsview']['default_node']['check_attempts'] = "2"
 default['opsview']['default_node']['check_interval'] = "0"

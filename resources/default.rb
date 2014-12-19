@@ -17,7 +17,7 @@
 # limitations under the License.
 #
 
-actions :add_or_update
+actions :add_or_update, :add, :update
 default_action  :add_or_update
 
 attribute :device_title, :kind_of => String, :name_attribute => true
@@ -33,4 +33,6 @@ attribute :hostgroup, :kind_of => String, :required => true
 attribute :hostalias, :kind_of => String, :default => ""
 attribute :hosttemplates, :kind_of => [Array, Hash], :default => [ 'Network - Base' ]
 attribute :keywords, :kind_of => [Array, Hash]
-attribute :reload_opsview, :kind_of => String, :default => node['opsview']['reload_opsview']
+attribute :reload_opsview, :kind_of => [TrueClass, FalseClass], :default => node['opsview']['reload_opsview']
+attribute :json_data, :kind_of => Hash
+attribute :api_token, :kind_of => String
