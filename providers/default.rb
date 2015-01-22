@@ -92,7 +92,9 @@ def update_host_details(original_json)
     node_json["alias"] = @new_resource.hostalias
   end
 
-  node_json["hostgroup"] = { "name" => @new_resource.hostgroup }
+  if node_json["hostgroup"]["name"] != @new_resource.hostgroup
+    node_json["hostgroup"] = { "name" => @new_resource.hostgroup }
+  end
 
   if node_json["hosttemplates"].nil?
     node_json["hosttemplates"] = []
@@ -100,7 +102,9 @@ def update_host_details(original_json)
   node_json["hosttemplates"].synchronise_array_by_key(@new_resource.hosttemplates, 'name') 
 
   if not @new_resource.monitored_by.to_s.empty?
-    node_json["monitored_by"] = { "name" => @new_resource.monitored_by }
+    if node_json["monitored_by"]["name"] != @new_resource.monitored_by
+      node_json["monitored_by"] = { "name" => @new_resource.monitored_by }
+    end
   end
 
   if node_json["keywords"].nil?
