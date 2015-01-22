@@ -32,7 +32,7 @@ attribute :monitored_by, :kind_of => String, :default => "Master Monitoring Serv
 attribute :hostgroup, :kind_of => String, :required => true
 attribute :hostalias, :kind_of => String, :default => ""
 attribute :hosttemplates, :kind_of => [Array, Hash], :default => [ 'Network - Base' ]
-attribute :keywords, :kind_of => [Array, Hash]
+attribute :keywords, :kind_of => [Array, Hash], :default => [ ]
 attribute :reload_opsview, :kind_of => [TrueClass, FalseClass], :default => node['opsview']['reload_opsview']
 attribute :json_data, :kind_of => Hash
 attribute :api_token, :kind_of => String

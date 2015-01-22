@@ -35,6 +35,8 @@ action :update do
 end
 
 def do_add_or_update(resource_action)
+  require 'hashdiff'
+
   if @current_resource.json_data.nil?
     if resource_action == :update
       Chef::Log.info( "#{@new_resource.name} is not registered - skipping.")
@@ -49,9 +51,12 @@ def do_add_or_update(resource_action)
       Chef::Log.info( "#{@new_resource.name} is already registered - skipping.")
       return false
     else
+      Chef::Log.debug("current_resource Before update_host_details: #{@current_resource.json_data.inspect}")
       @new_resource.json_data(update_host_details(@current_resource.json_data))
-      do_update = @current_resource.json_data == @new_resource.json_data ? false : true
-      Chef::Log.info( "#{@new_resource.name} updated: #{do_update}")
+      Chef::Log.debug("new_resource After update_host_details: #{@new_resource.json_data.inspect}")
+      json_diff = HashDiff.diff(@current_resource.json_data, @new_resource.json_data)
+      do_update = json_diff.size > 0 ? true : false
+      Chef::Log.info( "#{@new_resource.name} updated: #{do_update} diff: #{json_diff.inspect}")
     end 
   end
 
@@ -78,7 +83,8 @@ def new_registration
   update_host_details(node_json)
 end
 
-def update_host_details(node_json)
+def update_host_details(original_json)
+  node_json = Marshal.load(Marshal.dump(original_json))
   node_json["name"] = @new_resource.device_title
   node_json["ip"] = @new_resource.ip
 
@@ -87,25 +93,25 @@ def update_host_details(node_json)
   end
 
   node_json["hostgroup"] = { "name" => @new_resource.hostgroup }
-  node_json["hosttemplates"] = []
-  if @new_resource.hosttemplates
-    @new_resource.hosttemplates.each do |ht|
-      node_json["hosttemplates"] << {:name => ht}
-    end
+
+  if node_json["hosttemplates"].nil?
+    node_json["hosttemplates"] = []
   end
+  node_json["hosttemplates"].synchronise_array_by_key(@new_resource.hosttemplates, 'name') 
 
   if not @new_resource.monitored_by.to_s.empty?
     node_json["monitored_by"] = { "name" => @new_resource.monitored_by }
   end
 
-  node_json["keywords"] = []
-  if @new_resource.keywords
-    @new_resource.keywords.each do |kw|
-      node_json["keywords"] << {:name => kw}
-    end
+  if node_json["keywords"].nil?
+    node_json["keywords"] = []
   end
+  node_json["keywords"].synchronise_array_by_key(@new_resource.keywords, 'name')
 
-  node_json["hostattributes"] = get_host_attributes()
+  if node_json["hostattributes"].nil?
+    node_json["hostattributes"] = []
+  end
+  node_json["hostattributes"].synchronise_hash_by_key(get_host_attributes(), 'name')
 
   node_json
 end
@@ -130,6 +136,7 @@ def get_host_attributes
   
   return host_attributes
 end
+
 
 # Check the OpsView Server to see the current state of the
 # Device
@@ -227,6 +234,7 @@ def put_opsview_device
   end
 
   url = [ api_url(), "config/host" ].join("/")
+  Chef::Log.debug("RestClient.put " + url + " : " + @new_resource.json_data.to_json)
   begin
     response = RestClient.put url, @new_resource.json_data.to_json, 
                               :x_opsview_username => @new_resource.api_user, 

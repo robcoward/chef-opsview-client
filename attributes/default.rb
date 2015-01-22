@@ -21,7 +21,7 @@ default['opsview']['server_url'] = 'uat.opsview.com'
 default['opsview']['server_port'] = '443'
 default['opsview']['server_protocol'] = 'https'
 
-default['opsview']['hosttemplates'] = [ 'Network - Base' ]
+default['opsview']['hosttemplates'] = [ "Network - Base" ]
 
 default['opsview']['reload_opsview'] = true
 
@@ -31,10 +31,10 @@ default['opsview']['optional_attributes'] = [ 'MAC', 'CHEFSERVER' ]
 
 default['opsview']['default_node']['flap_detection_enabled'] = "1"
 default['opsview']['default_node']['snmpv3_privprotocol'] = nil
-default['opsview']['default_node']['hosttemplates'] = [ ]
-default['opsview']['default_node']['keywords'] = [ ]
+default['opsview']['default_node']['hosttemplates'] = nil
+default['opsview']['default_node']['keywords'] = nil
 default['opsview']['default_node']['check_period'] = { "name" => "24x7" }
-default['opsview']['default_node']['hostattributes'] = [ ]
+default['opsview']['default_node']['hostattributes'] = nil
 default['opsview']['default_node']['notification_period'] = { "name" => "24x7" }
 default['opsview']['default_node']['name'] = "chef-unknown"
 default['opsview']['default_node']['rancid_vendor'] = nil
