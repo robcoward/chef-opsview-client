@@ -21,7 +21,7 @@ RSpec.configure do |config|
   config.include WebMock::Matchers
 
   # Specify the Chef log_level (default: :warn)
-  config.log_level = :info
+  #config.log_level = :info
 end
 
 at_exit { ChefSpec::Coverage.report! }
