@@ -13,4 +13,7 @@ group :development do
 	#gem 'ci_reporter'
 	gem 'guard-rspec'
 	gem 'chefspec'
+	gem 'webmock'
+	gem 'hashdiff'
+	gem 'rest-client'
 end

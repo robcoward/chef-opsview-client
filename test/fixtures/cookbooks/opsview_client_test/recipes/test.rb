@@ -29,6 +29,6 @@ opsview_client node['fqdn'] do
   hostgroup    node['opsview_client_test']['hostgroup']
   hostalias    node['opsview_client_test']['hostalias']
   hosttemplates node['opsview_client_test']['hosttemplates']
-  reload_opsview false
+  reload_opsview node['opsview_client_test']['reload_opsview']
 end
 
