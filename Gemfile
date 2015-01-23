@@ -11,6 +11,9 @@ group :development do
 	gem 'foodcritic'
 	gem 'guard-foodcritic'
 	#gem 'ci_reporter'
-	#gem 'guard-rspec'
-	#gem 'chefspec'
+	gem 'guard-rspec'
+	gem 'chefspec'
+	gem 'webmock'
+	gem 'hashdiff'
+	gem 'rest-client'
 end

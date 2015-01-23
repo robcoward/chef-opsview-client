@@ -19,26 +19,16 @@
 
 include_recipe "opsview_client"
 
-opsview_client 'client1.fqdn' do 
-  api_user 'userid'
-  api_password 'passw0rd'
-  api_protocol 'http'
-  api_port 80
-  ip node['ipaddress']
-  hostgroup 'Test_Hostgroup'
-  hostalias 'Chef client test'
-  hosttemplates node['opsview']['hosttemplates']
-  reload_opsview false
+opsview_client node['fqdn'] do 
+  api_user     node['opsview_client_test']['user']
+  api_password node['opsview_client_test']['password']
+  api_host     node['opsview_client_test']['host']
+  api_protocol node['opsview_client_test']['protocol'] 
+  api_port     node['opsview_client_test']['port']
+  ip           node['ipaddress']
+  hostgroup    node['opsview_client_test']['hostgroup']
+  hostalias    node['opsview_client_test']['hostalias']
+  hosttemplates node['opsview_client_test']['hosttemplates']
+  reload_opsview node['opsview_client_test']['reload_opsview']
 end
 
-opsview_client 'client2.fqdn' do 
-  api_user 'userid'
-  api_password 'passw0rd'
-  api_protocol 'http'
-  api_port 80
-  ip node['ipaddress']
-  hostgroup 'Test_Hostgroup'
-  hostalias 'Chef client test'
-  hosttemplates node['opsview']['hosttemplates']
-  reload_opsview true
-end

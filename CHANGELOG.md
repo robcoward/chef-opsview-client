@@ -3,6 +3,14 @@ opsview_client CHANGELOG
 
 This file is used to list changes made in each version of the opsview_client cookbook.
 
+0.2.1
+-----
+- Rob Coward - Fixed #3 where updates are not being passed to opsview
+
+0.2.0
+-----
+- Rob Coward - Refactored to allow add and update actions to be used
+
 0.1.0
 -----
 - Rob Coward - Initial release of opsview_client

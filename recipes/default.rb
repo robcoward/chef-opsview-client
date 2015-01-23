@@ -18,6 +18,7 @@
 #
 
 chef_gem 'rest-client'
+chef_gem 'hashdiff'
 
 case node['platform_family']
 when 'windows'
