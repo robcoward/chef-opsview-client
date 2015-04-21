@@ -1,0 +1,16 @@
+DEPENDENCIES
+  opsview_client
+    path: .
+    metadata: true
+  opsview_client_test
+    path: test/fixtures/cookbooks/opsview_client_test
+
+GRAPH
+  opsview_client (0.3.0)
+    yum (~> 3.5.4)
+    yum-epel (~> 0.6.0)
+  opsview_client_test (0.2.1)
+    opsview_client (>= 0.0.0)
+  yum (3.5.4)
+  yum-epel (0.6.0)
+    yum (~> 3.0)
