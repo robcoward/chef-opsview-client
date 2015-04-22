@@ -169,6 +169,12 @@ Attributes
     <td>nrpe.cfg parameter - List of additional cfg files to include</td>
     <td><tt>BLANK</tt></td>
   </tr>
+  <tr>
+    <td><tt>['opsview']['agent']['default_commands']</tt></td>
+    <td>Boolean</td>
+    <td>nrpe.cfg parameter - Whether to define the default check commands, such as check_load and check_disk</td>
+    <td><tt>true</tt></td>
+  </tr>
 </table>
 
 Usage

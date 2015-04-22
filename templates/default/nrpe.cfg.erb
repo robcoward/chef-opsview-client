@@ -173,6 +173,7 @@ include_dir=<%= dir %>
 <% end %>
 
 
+<% if node['opsview']['agent']['default_commands'] %>
 
 # COMMAND DEFINITIONS
 # Command definitions that this daemon will run.  Definitions
@@ -217,3 +218,4 @@ command[check_postgres]=/usr/local/nagios/libexec/check_postgres $ARG1$
 command[check_raid]=/usr/local/nagios/libexec/check_raid $ARG1$
 command[check_time_skew]=/usr/local/nagios/libexec/check_time_skew $ARG1$
 
+<% end %>

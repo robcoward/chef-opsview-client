@@ -27,4 +27,5 @@ default['opsview']['agent']['connection_timeout'] = '300'
 default['opsview']['agent']['allow_weak_random_seed'] = '1'
 default['opsview']['agent']['include_dirs'] = [ "#{node['opsview']['agent']['conf_dir']}/nrpe_local" ]
 default['opsview']['agent']['include_files'] = [ ]
+default['opsview']['agent']['default_commands'] = true
 
