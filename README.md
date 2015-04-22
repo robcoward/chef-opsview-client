@@ -59,6 +59,118 @@ Attributes
   </tr>
 </table>
 
+#### opsview_client::setup_rhel_agent
+<table>
+  <tr>
+    <th>Key</th>
+    <th>Type</th>
+    <th>Description</th>
+    <th>Default</th>
+  </tr>
+  <tr>
+    <td><tt>['opsview']['agent']['installation_method']</tt></td>
+    <td>String</td>
+    <td>Installation method for the agent - set up a yum repo, or assume it already exists (local)</td>
+    <td><tt>repo</tt></td>
+  </tr>
+  <tr>
+    <td><tt>['opsview']['agent']['packages']</tt></td>
+    <td>Hash</td>
+    <td>Packages (and specific versions, if needed) to install</td>
+    <td><tt>{ 'libmcrypt' => nil, 'opsview-agent' => nil }</tt></td>
+  </tr>
+  <tr>
+    <td><tt>['opsview']['agent']['conf_dir']</tt></td>
+    <td>String</td>
+    <td>Directory where the opsview-agent config files are</td>
+    <td><tt>/usr/local/nagios/etc</tt></td>
+  </tr>
+  <tr>
+    <td><tt>['opsview']['agent']['log_facility']</tt></td>
+    <td>String</td>
+    <td>nrpe.cfg parameter - syslog facility that should be used for logging</td>
+    <td><tt>daemon</tt></td>
+  </tr>
+  <tr>
+    <td><tt>['opsview']['agent']['pid_file']</tt></td>
+    <td>String</td>
+    <td>nrpe.cfg parameter - pid file for the opsview-agent process</td>
+    <td><tt>/var/tmp/nrpe.pid</tt></td>
+  </tr>
+  <tr>
+    <td><tt>['opsview']['agent']['server_port']</tt></td>
+    <td>String</td>
+    <td>nrpe.cfg parameter - what port the agent will listen on</td>
+    <td><tt>5666</tt></td>
+  </tr>
+  <tr>
+    <td><tt>['opsview']['agent']['server_address']</tt></td>
+    <td>String</td>
+    <td>nrpe.cfg parameter - what IP address to bind to</td>
+    <td><tt>0.0.0.0</tt></td>
+  </tr>
+  <tr>
+    <td><tt>['opsview']['agent']['nrpe_user']</tt></td>
+    <td>String</td>
+    <td>nrpe.cfg parameter - user to run as</td>
+    <td><tt>nagios</tt></td>
+  </tr>
+  <tr>
+    <td><tt>['opsview']['agent']['nrpe_group']</tt></td>
+    <td>String</td>
+    <td>nrpe.cfg parameter - group to run as</td>
+    <td><tt>nagios</tt></td>
+  </tr>
+  <tr>
+    <td><tt>['opsview']['agent']['allowed_hosts']</tt></td>
+    <td>String</td>
+    <td>nrpe.cfg parameter - comma-separated list of allowed host IPs</td>
+    <td><tt>127.0.0.1</tt></td>
+  </tr>
+  <tr>
+    <td><tt>['opsview']['agent']['dont_blame_nrpe']</tt></td>
+    <td>String</td>
+    <td>nrpe.cfg parameter - Whether to allow command arguments (1 to allow)</td>
+    <td><tt>1</tt></td>
+  </tr>
+  <tr>
+    <td><tt>['opsview']['agent']['debug']</tt></td>
+    <td>String</td>
+    <td>nrpe.cfg parameter - Whether to log debug messages</td>
+    <td><tt>0</tt></td>
+  </tr>
+  <tr>
+    <td><tt>['opsview']['agent']['command_timeout']</tt></td>
+    <td>String</td>
+    <td>nrpe.cfg parameter - max number of seconds allowed for plugins to finish</td>
+    <td><tt>60</tt></td>
+  </tr>
+  <tr>
+    <td><tt>['opsview']['agent']['connection_timeout']</tt></td>
+    <td>String</td>
+    <td>nrpe.cfg parameter - max number of seconds the agent will wait for connections to get established</td>
+    <td><tt>300</tt></td>
+  </tr>
+  <tr>
+    <td><tt>['opsview']['agent']['allow_weak_random_seed']</tt></td>
+    <td>String</td>
+    <td>nrpe.cfg parameter - whether to use pseudo random generator if /dev/[u]random unavailable</td>
+    <td><tt>1</tt></td>
+  </tr>
+  <tr>
+    <td><tt>['opsview']['agent']['include_dirs']</tt></td>
+    <td>List</td>
+    <td>nrpe.cfg parameter - List of include directories to scan for cfg files</td>
+    <td><tt>/usr/local/nagios/etc/nrpe_local</tt></td>
+  </tr>
+  <tr>
+    <td><tt>['opsview']['agent']['include_files']</tt></td>
+    <td>List</td>
+    <td>nrpe.cfg parameter - List of additional cfg files to include</td>
+    <td><tt>BLANK</tt></td>
+  </tr>
+</table>
+
 Usage
 -----
 #### opsview_client::default
@@ -79,7 +191,7 @@ Just include `opsview_client` in your node's `run_list`:
 Include this resource in your recipe to have the host dynamically registered with OpsView.
 
 ```ruby
-opsview_client node['fqdn'] do 
+opsview_client node['fqdn'] do
   api_user 'userid'
   api_password 'passw0rd'
   api_protocol 'http'
@@ -103,4 +215,6 @@ Contributing
 
 License and Authors
 -------------------
-Authors: Rob Coward
+Authors:
+  * Rob Coward
+  * Tenyo Grozev (tenyo.grozev@yale.edu)
