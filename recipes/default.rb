@@ -17,9 +17,12 @@
 # limitations under the License.
 #
 
+# build-essential sets up prereqs for chef_gem
+include_recipe 'build-essential::default'
 chef_gem 'rest-client'
 chef_gem 'hashdiff'
 
+# install the appropriate Opsview agent
 case node['platform_family']
 when 'windows'
         include_recipe 'opsview_client::setup_windows_agent'

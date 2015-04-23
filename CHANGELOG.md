@@ -3,6 +3,10 @@ opsview_client CHANGELOG
 
 This file is used to list changes made in each version of the opsview_client cookbook.
 
+0.3.0
+-----
+- Tenyo Grozev - Added setup_rhel_agent recipe; added build-essential, yum and yum-epel dependencies
+
 0.2.1
 -----
 - Rob Coward - Fixed #3 where updates are not being passed to opsview
