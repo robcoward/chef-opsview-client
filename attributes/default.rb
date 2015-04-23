@@ -17,6 +17,9 @@
 # limitations under the License.
 #
 
+# override build-essential attribute
+default['build-essential']['compile_time'] = true
+
 default['opsview']['server_url'] = 'uat.opsview.com'
 default['opsview']['server_port'] = '443'
 default['opsview']['server_protocol'] = 'https'
