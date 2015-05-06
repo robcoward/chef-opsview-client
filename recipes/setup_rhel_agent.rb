@@ -41,6 +41,7 @@ node['opsview']['agent']['packages'].each do |pkg,ver|
   package pkg do
     action :install
     version ver if ver
+    options '--nogpgcheck'
   end
 end
 
