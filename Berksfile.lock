@@ -7,7 +7,7 @@ DEPENDENCIES
 
 GRAPH
   build-essential (2.2.3)
-  opsview_client (0.3.0)
+  opsview_client (0.3.1)
     build-essential (~> 2.2.3)
     yum (~> 3.5.4)
     yum-epel (~> 0.6.0)
