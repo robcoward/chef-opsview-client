@@ -47,8 +47,8 @@ template "#{node['opsview']['agent']['conf_dir']}/nrpe.cfg" do
   mode '0444'
   user node['opsview']['agent']['nrpe_user']
   group node['opsview']['agent']['nrpe_group']
-  notifies :restart, 'service[opsview-agent]', :immediately
-  only_if { node['opsview']['agent']['manage_config'] }
+  notifies :restart, 'service[opsview-agent]'
+  action node['opsview']['agent']['manage_config'] ? :create : :create_if_missing
 end
 
 service "opsview-agent" do
