@@ -1,0 +1,104 @@
+[modules]
+NRPEListener.dll
+NSClientListener.dll
+NSCAAgent.dll
+CheckWMI.dll
+FileLogger.dll
+CheckSystem.dll
+CheckDisk.dll
+CheckEventLog.dll
+CheckHelpers.dll
+;# NSCLIENT++ MODULES
+;# A list with DLLs to load at startup.
+FileLogger.dll
+CheckSystem.dll
+CheckDisk.dll
+NRPEListener.dll
+;SysTray.dll
+CheckEventLog.dll
+CheckHelpers.dll
+;CheckWMI.dll
+CheckExternalScripts.dll
+
+
+[Settings]
+allowed_hosts=<%= @monitoring_hosts.join(',') %>
+
+;# USE THIS FILE
+;  Use the INI file as opposed to the registry if this is 0 and the use_reg in the registry is set to 1 
+;  the registry will be used instead.
+use_file=1
+
+[log]
+;# LOG DEBUG
+;  Set to 1 if you want debug message printed in the log file (debug messages are always printed to stdout when run with -test)
+;debug=1
+
+;# LOG FILE
+;  The file to print log statements to
+file=opsview-agent.log
+
+[NRPE]
+;# NRPE PORT NUMBER
+;  This is the port the NRPEListener.dll will listen to.
+port=5666
+
+;# COMMAND ARGUMENT PROCESSING
+;  This option determines whether or not the NRPE daemon will allow clients to specify arguments to commands that are executed.
+allow_arguments=1
+
+;# COMMAND ALLOW NASTY META CHARS
+;  This option determines whether or not the NRPE daemon will allow clients to specify nasty (as in |`&><'"\[]{}) characters in arguments.
+allow_nasty_meta_chars=1
+
+;# USE SSL SOCKET
+;  This option controls if SSL should be used on the socket.
+use_ssl=1
+
+[Script Wrappings]
+ps1=cmd /c echo %SCRIPT% %ARGS%; exit($lastexitcode) | powershell.exe -command -
+
+[Wrapped Scripts]
+<% if @wrapped_scripts -%>
+<% @wrapped_scripts.each do |w| -%>
+<%= w['name'] %>=scripts\<%= w['filename'] %> <%= w['arguments'] %>
+<% end -%>
+<% end -%>
+
+[External Scripts]
+; The old plugins we'll deprecate
+check_disk=scripts\diskspace_nrpe_nt.exe $ARG1$
+check_cpuload=scripts\cpuload_nrpe_nt.exe $ARG1$
+check_memload=scripts\memload_nrpe_nt.exe $ARG1$
+win_service=scripts\service_nrpe_nt.exe $ARG1$
+check_sysinfo=scripts\check_sysinfo.exe
+<% if @scripts -%>
+<% @scripts.each do |s| -%>
+<%= s['name'] %>=<%= s['script_handler'] %> scripts\<%= s['filename'] %> <%= s['arguments'] %>
+<% end -%>
+<% end -%>
+
+[External Alias]
+nsc_checkdrivesize=CheckDriveSize $ARG1$
+nsc_checkfilesize=CheckFileSize $ARG1$
+nsc_checkfile=CheckFile $ARG1$
+nsc_checkeventlog=CheckEventLog $ARG1$
+nsc_checkcpu=CheckCPU $ARG1$
+nsc_checkuptime=CheckUpTime $ARG1$
+nsc_checkservicestate=CheckServiceState $ARG1$
+nsc_checkprocstate=CheckProcState $ARG1$
+nsc_checkmem=CheckMem $ARG1$
+nsc_checkcounter=CheckCounter $ARG1$
+
+win_cpuload=check_cpuload $ARG1$
+win_memload=check_memload $ARG1$
+win_check_sysinfo=check_sysinfo
+win_check_wmi=CheckWMI
+win_process=CheckProcState
+win_eventlog=CheckEventLog
+
+<% if @aliases -%>
+<% @aliases.each do |a| -%>
+<%= a['name'] %>=<%= a['module'] %> $ARG1$
+<% end -%>
+<% end -%>
