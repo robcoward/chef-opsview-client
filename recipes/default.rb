@@ -19,8 +19,12 @@
 
 # build-essential sets up prereqs for chef_gem
 include_recipe 'build-essential::default'
-chef_gem 'rest-client'
-chef_gem 'hashdiff'
+chef_gem 'rest-client' do
+    compile_time true if Chef::Resource::ChefGem.instance_methods(false).include?(:compile_time)
+end
+chef_gem 'hashdiff' do
+    compile_time true if Chef::Resource::ChefGem.instance_methods(false).include?(:compile_time)
+end
 
 # install the appropriate Opsview agent
 case node['platform_family']
