@@ -22,15 +22,12 @@ if node['opsview']['agent']['installation_method'] == 'repo'
   # add the epel repo, needed for the libmcrypt package
   include_recipe "yum-epel::default"
 
-  yum_repository "opsview-core" do
-    description "Opsview Core"
-    gpgcheck false
-    case node['platform']
-    when "redhat"
-      baseurl "http://downloads.opsview.com/opsview-core/latest/yum/rhel/$releasever/$basearch"
-    when "centos"
-      baseurl "http://downloads.opsview.com/opsview-core/latest/yum/centos/$releasever/$basearch"
-    end
+  yum_repository node['yum']['opsview-core']['repositoryid'] do
+    description node['yum']['opsview-core']['description']
+    gpgcheck node['yum']['opsview-core']['gpgcheck']
+	gpgkey node['yum']['opsview-core']['gpgkey'] unless node['yum']['opsview-core']['gpgkey'].nil?
+    baseurl node['yum']['opsview-core']['baseurl']
+	enabled node['yum']['opsview-core']['enabled']
     action :create
   end
 
@@ -50,7 +47,8 @@ template "#{node['opsview']['agent']['conf_dir']}/nrpe.cfg" do
   mode '0444'
   user node['opsview']['agent']['nrpe_user']
   group node['opsview']['agent']['nrpe_group']
-  notifies :restart, 'service[opsview-agent]', :immediately
+  notifies :restart, 'service[opsview-agent]'
+  action node['opsview']['agent']['manage_config'] ? :create : :create_if_missing
 end
 
 service "opsview-agent" do

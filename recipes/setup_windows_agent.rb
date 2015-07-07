@@ -2,7 +2,7 @@
 # Cookbook Name:: opsview_client
 # Recipe:: setup_windows_agent
 #
-# Copyright 2014, Rob Coward
+# Copyright 2015, Rob Coward
 #
 # Licensed under the Apache License, Version 2.0 (the "License");
 # you may not use this file except in compliance with the License.
@@ -17,3 +17,21 @@
 # limitations under the License.
 #
 
+arch = node['kernel']['machine'] == 'x86_64' ? 'x64' : 'Win32'
+windows_package "Opsview NSClient++ Windows Agent (#{arch})" do
+	source node['opsview']['agent'][arch]['url']
+	options "/quiet /norestart" 
+	action :install
+end
+
+template ::File.join(node['opsview']['agent']['windows_conf_dir'], 'NSC.ini') do
+  source 'NSC.ini.erb'
+  notifies :restart, 'service[NSClientpp]'
+  action node['opsview']['agent']['manage_ncslient_config'] ? :create : :create_if_missing
+end
+
+
+#finally ensure service is running for opsview 
+service 'NSClientpp' do
+	action [:enable, :start]
+end

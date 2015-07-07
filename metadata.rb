@@ -9,6 +9,7 @@ version          '0.3.1'
 depends 'build-essential', '~> 2.2.3'
 depends 'yum', '~> 3.5.4'
 depends 'yum-epel', '~> 0.6.0'
+depends 'windows', '~> 1.37.0'
 
 %w(redhat centos windows).each do |os|
   supports os

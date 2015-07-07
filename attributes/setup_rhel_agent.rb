@@ -3,6 +3,18 @@
 # set to 'local' if you want to handle the package repo yourself (e.g. if you're wrapping this cookbook and using a Satellite server)
 default['opsview']['agent']['installation_method'] = 'repo'
 
+case node['platform']
+when "redhat"
+	default['yum']['opsview-core']['baseurl'] = 'http://downloads.opsview.com/opsview-core/latest/yum/rhel/$releasever/$basearch'
+when "centos"
+	default['yum']['opsview-core']['baseurl'] = 'http://downloads.opsview.com/opsview-core/latest/yum/centos/$releasever/$basearch'
+end
+default['yum']['opsview-core']['enabled'] = true
+default['yum']['opsview-core']['gpgcheck'] = false
+default['yum']['opsview-core']['gpgkey'] = nil
+default['yum']['opsview-core']['repositoryid'] = 'opsview-core'
+default['yum']['opsview-core']['description'] = 'Opsview Core - $basearch'
+
 # specify which packages (and specific versions, if needed) to install
 default['opsview']['agent']['packages'] = {
   'libmcrypt' => nil,
@@ -28,4 +40,5 @@ default['opsview']['agent']['allow_weak_random_seed'] = '1'
 default['opsview']['agent']['include_dirs'] = [ "#{node['opsview']['agent']['conf_dir']}/nrpe_local" ]
 default['opsview']['agent']['include_files'] = [ ]
 default['opsview']['agent']['default_commands'] = true
+default['opsview']['agent']['manage_config'] = true
 
