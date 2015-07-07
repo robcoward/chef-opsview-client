@@ -24,7 +24,7 @@ windows_package "Opsview NSClient++ Windows Agent (#{arch})" do
 	action :install
 end
 
-template "#{node['opsview']['agent']['windows_conf_dir']}/NSC.ini" do
+template ::File.join(node['opsview']['agent']['windows_conf_dir'], 'NSC.ini') do
   source 'NSC.ini.erb'
   notifies :restart, 'service[NSClientpp]'
   action node['opsview']['agent']['manage_ncslient_config'] ? :create : :create_if_missing
