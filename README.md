@@ -175,6 +175,46 @@ Attributes
     <td>nrpe.cfg parameter - Whether to define the default check commands, such as check_load and check_disk</td>
     <td><tt>true</tt></td>
   </tr>
+  <tr>
+    <td><tt>['opsview']['agent']['manage_config']</tt></td>
+    <td>Boolean</td>
+    <td>Chef will manage the configuration file from the cookbook template. When false, will only create the file if it is missing.</td>
+    <td><tt>true</tt></td>
+  </tr>
+</table>
+
+#### opsview_client::setup_windows_agent
+<table>
+  <tr>
+    <th>Key</th>
+    <th>Type</th>
+    <th>Description</th>
+    <th>Default</th>
+  </tr>
+  <tr>
+    <td><tt>['opsview']['agent']['x64']['url']</tt></td>
+    <td>String</td>
+    <td>Download URL or local source for the 64-bit Install MSI file</td>
+    <td><a href="https://s3.amazonaws.com/opsview-agents/Windows/Opsview_Windows_Agent_x64_28-01-15-1600.msi">Opsview_Windows_Agent_x64_28-01-15-1600.msi</a></td>
+  </tr>
+  <tr>
+    <td><tt>['opsview']['agent']['Win32']['url']</tt></td>
+    <td>String</td>
+    <td>Download URL or local source for the 32-bit Install MSI file</td>
+    <td><a href="https://s3.amazonaws.com/opsview-agents/Windows/Opsview_Windows_Agent_Win32_28-01-15-1559.msi">Opsview_Windows_Agent_Win32_28-01-15-1559.msi</a></td>
+  </tr>
+  <tr>
+    <td><tt>['opsview']['agent']['windows_conf_dir']</tt></td>
+    <td>String</td>
+    <td>Directory where the opsview-agent config files are</td>
+    <td><tt>C:\Program Files\Opsview Agent</tt></td>
+  </tr>
+  <tr>
+    <td><tt>['opsview']['agent']['manage_ncslient_config']</tt></td>
+    <td>Boolean</td>
+    <td>Chef will manage the configuration file from the cookbook template. When false, will only create the file if it is missing.</td>
+    <td><tt>true</tt></td>
+  </tr>
 </table>
 
 Usage
@@ -209,6 +249,24 @@ opsview_client node['fqdn'] do
   reload_opsview false
 end
 ```
+
+Test-Kitchen
+------------
+To converge the cookbook will require access to an opsview server api, and user credentials to authenticate with.
+
+Add the following .kitchen.local.yml file to your cookbook directory with the relevant config.
+```
+---
+suites:
+- name: client
+  run_list: ["recipe[opsview_client_test::test]"]
+  attributes: { 'opsview' : { 'server_url' : '192.168.1.1' },
+				'opsview_client_test': { 'host': '192.168.1.1', 
+										 'user': 'chef', 
+										 'password': 'chef'} }
+```
+
+Testing the win2012 platform assumes that you have already imported a vagrant box named win2012, configured for winrm access.
 
 Contributing
 ------------
