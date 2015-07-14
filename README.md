@@ -8,214 +8,46 @@ Attributes
 ----------
 
 #### opsview_client::default
-<table>
-  <tr>
-    <th>Key</th>
-    <th>Type</th>
-    <th>Description</th>
-    <th>Default</th>
-  </tr>
-  <tr>
-    <td><tt>['opsview']['server_url']</tt></td>
-    <td>String</td>
-    <td>FQDN of your OpsView Master Server</td>
-    <td><tt>uat.opsview.com</tt></td>
-  </tr>
-  <tr>
-    <td><tt>['opsview']['server_protocol']</tt></td>
-    <td>String</td>
-    <td>http or https</td>
-    <td><tt>https</tt></td>
-  </tr>
-  <tr>
-    <td><tt>['opsview']['server_port']</tt></td>
-    <td>String</td>
-    <td>Port the OpsView server is on</td>
-    <td><tt>443</tt></td>
-  </tr>
-  <tr>
-    <td><tt>['opsview']['hosttemplates']</tt></td>
-    <td>List</td>
-    <td>List of host templates used to monitor the host with</td>
-    <td><tt>[ 'Network - Base' ]</tt></td>
-  </tr>
-  <tr>
-    <td><tt>['opsview']['reload_opsview']</tt></td>
-    <td>Boolean</td>
-    <td>Reload OpsView configuration after registering host</td>
-    <td><tt>true</tt></td>
-  </tr>
-  <tr>
-    <td><tt>['opsview']['exclude_fs_type']</tt></td>
-    <td>List</td>
-    <td>List of filesystem types to exclude when processing node['filesystem'] to construct a list of host attributes</td>
-    <td><tt>[ 'usbfs', 'devpts', 'devtmpfs', 'binfmt_misc', 'proc', 'rootfs', 'sysfs', 'tmpfs' ]</tt></td>
-  </tr>
-  <tr>
-    <td><tt>['opsview']['default_node']</tt></td>
-    <td>Hash</td>
-    <td>Hash representation of the JSON object used to register new hosts with the OpsView API</td>
-    <td><tt>See attributes/default.rb</tt></td>
-  </tr>
-</table>
+ Key                             | Type    | Description                        | Default        
+---------------------------------|---------|------------------------------------|----------------
+`['opsview']['server_url']`      | String  | FQDN of your OpsView Master Server | `uat.opsview.com`
+`['opsview']['server_protocol']` | String  | http or https                      | `https`
+`['opsview']['server_port']`     | String  | Port the OpsView server is on      | `443`
+`['opsview']['hosttemplates']`   | List    | List of host templates used to monitor the host with | `[ 'Network - Base' ]`
+`['opsview']['reload_opsview']`  | Boolean | Reload OpsView configuration after registering host | `true`
+`['opsview']['exclude_fs_type']` | List    | List of filesystem types to exclude when processing node['filesystem'] to construct a list of host attributes | `[ 'usbfs', 'devpts', 'devtmpfs', 'binfmt_misc', 'proc', 'rootfs', 'sysfs', 'tmpfs' ]`
+`['opsview']['default_node']`    | Hash    | Hash representation of the JSON object used to register new hosts with the OpsView API   | See attributes/default.rb
 
 #### opsview_client::setup_rhel_agent
-<table>
-  <tr>
-    <th>Key</th>
-    <th>Type</th>
-    <th>Description</th>
-    <th>Default</th>
-  </tr>
-  <tr>
-    <td><tt>['opsview']['agent']['installation_method']</tt></td>
-    <td>String</td>
-    <td>Installation method for the agent - set up a yum repo, or assume it already exists (local)</td>
-    <td><tt>repo</tt></td>
-  </tr>
-  <tr>
-    <td><tt>['opsview']['agent']['packages']</tt></td>
-    <td>Hash</td>
-    <td>Packages (and specific versions, if needed) to install</td>
-    <td><tt>{ 'libmcrypt' => nil, 'opsview-agent' => nil }</tt></td>
-  </tr>
-  <tr>
-    <td><tt>['opsview']['agent']['conf_dir']</tt></td>
-    <td>String</td>
-    <td>Directory where the opsview-agent config files are</td>
-    <td><tt>/usr/local/nagios/etc</tt></td>
-  </tr>
-  <tr>
-    <td><tt>['opsview']['agent']['log_facility']</tt></td>
-    <td>String</td>
-    <td>nrpe.cfg parameter - syslog facility that should be used for logging</td>
-    <td><tt>daemon</tt></td>
-  </tr>
-  <tr>
-    <td><tt>['opsview']['agent']['pid_file']</tt></td>
-    <td>String</td>
-    <td>nrpe.cfg parameter - pid file for the opsview-agent process</td>
-    <td><tt>/var/tmp/nrpe.pid</tt></td>
-  </tr>
-  <tr>
-    <td><tt>['opsview']['agent']['server_port']</tt></td>
-    <td>String</td>
-    <td>nrpe.cfg parameter - what port the agent will listen on</td>
-    <td><tt>5666</tt></td>
-  </tr>
-  <tr>
-    <td><tt>['opsview']['agent']['server_address']</tt></td>
-    <td>String</td>
-    <td>nrpe.cfg parameter - what IP address to bind to</td>
-    <td><tt>0.0.0.0</tt></td>
-  </tr>
-  <tr>
-    <td><tt>['opsview']['agent']['nrpe_user']</tt></td>
-    <td>String</td>
-    <td>nrpe.cfg parameter - user to run as</td>
-    <td><tt>nagios</tt></td>
-  </tr>
-  <tr>
-    <td><tt>['opsview']['agent']['nrpe_group']</tt></td>
-    <td>String</td>
-    <td>nrpe.cfg parameter - group to run as</td>
-    <td><tt>nagios</tt></td>
-  </tr>
-  <tr>
-    <td><tt>['opsview']['agent']['allowed_hosts']</tt></td>
-    <td>String</td>
-    <td>nrpe.cfg parameter - comma-separated list of allowed host IPs</td>
-    <td><tt>127.0.0.1</tt></td>
-  </tr>
-  <tr>
-    <td><tt>['opsview']['agent']['dont_blame_nrpe']</tt></td>
-    <td>String</td>
-    <td>nrpe.cfg parameter - Whether to allow command arguments (1 to allow)</td>
-    <td><tt>1</tt></td>
-  </tr>
-  <tr>
-    <td><tt>['opsview']['agent']['debug']</tt></td>
-    <td>String</td>
-    <td>nrpe.cfg parameter - Whether to log debug messages</td>
-    <td><tt>0</tt></td>
-  </tr>
-  <tr>
-    <td><tt>['opsview']['agent']['command_timeout']</tt></td>
-    <td>String</td>
-    <td>nrpe.cfg parameter - max number of seconds allowed for plugins to finish</td>
-    <td><tt>60</tt></td>
-  </tr>
-  <tr>
-    <td><tt>['opsview']['agent']['connection_timeout']</tt></td>
-    <td>String</td>
-    <td>nrpe.cfg parameter - max number of seconds the agent will wait for connections to get established</td>
-    <td><tt>300</tt></td>
-  </tr>
-  <tr>
-    <td><tt>['opsview']['agent']['allow_weak_random_seed']</tt></td>
-    <td>String</td>
-    <td>nrpe.cfg parameter - whether to use pseudo random generator if /dev/[u]random unavailable</td>
-    <td><tt>1</tt></td>
-  </tr>
-  <tr>
-    <td><tt>['opsview']['agent']['include_dirs']</tt></td>
-    <td>List</td>
-    <td>nrpe.cfg parameter - List of include directories to scan for cfg files</td>
-    <td><tt>/usr/local/nagios/etc/nrpe_local</tt></td>
-  </tr>
-  <tr>
-    <td><tt>['opsview']['agent']['include_files']</tt></td>
-    <td>List</td>
-    <td>nrpe.cfg parameter - List of additional cfg files to include</td>
-    <td><tt>BLANK</tt></td>
-  </tr>
-  <tr>
-    <td><tt>['opsview']['agent']['default_commands']</tt></td>
-    <td>Boolean</td>
-    <td>nrpe.cfg parameter - Whether to define the default check commands, such as check_load and check_disk</td>
-    <td><tt>true</tt></td>
-  </tr>
-  <tr>
-    <td><tt>['opsview']['agent']['manage_config']</tt></td>
-    <td>Boolean</td>
-    <td>Chef will manage the configuration file from the cookbook template. When false, will only create the file if it is missing.</td>
-    <td><tt>true</tt></td>
-  </tr>
-</table>
+ Key                                             | Type    | Description                                        | Default        
+-------------------------------------------------|---------|----------------------------------------------------|----------------
+`['opsview']['agent']['installation_method']`    | String  | Installation method for the agent - set up a yum repo, or assume it already exists (local) | `repo`
+`['opsview']['agent']['packages']`               | Hash    | Packages (and specific versions, if needed) to install | `{ 'libmcrypt' => nil, 'opsview-agent' => nil }`
+`['opsview']['agent']['conf_dir']`               | String  | Directory where the opsview-agent config files are | `/usr/local/nagios/etc`
+`['opsview']['agent']['log_facility']`           | String  | nrpe.cfg parameter - syslog facility that should be used for logging | `daemon`
+`['opsview']['agent']['pid_file']`               | String  | nrpe.cfg parameter - pid file for the opsview-agent process | `/var/tmp/nrpe.pid`
+`['opsview']['agent']['server_port']`            | String  | nrpe.cfg parameter - what port the agent will listen on | `5666`
+`['opsview']['agent']['server_address']`         | String  | nrpe.cfg parameter - what IP address to bind to    | `0.0.0.0`
+`['opsview']['agent']['nrpe_user']`              | String  | nrpe.cfg parameter - user to run as                | `nagios`
+`['opsview']['agent']['nrpe_group']`             | String  | nrpe.cfg parameter - group to run as               | `nagios`
+`['opsview']['agent']['allowed_hosts']`          | String  | nrpe.cfg parameter - comma-separated list of allowed host IPs | `127.0.0.1`
+`['opsview']['agent']['dont_blame_nrpe']`        | String  | nrpe.cfg parameter - Whether to allow command arguments (1 to allow) | `1`
+`['opsview']['agent']['debug']`                  | String  | nrpe.cfg parameter - Whether to log debug messages | `0`
+`['opsview']['agent']['command_timeout']`        | String  | nrpe.cfg parameter - max number of seconds allowed for plugins to finish | `60`
+`['opsview']['agent']['connection_timeout']`     | String  | nrpe.cfg parameter - max number of seconds the agent will wait for connections to get established | `300`
+`['opsview']['agent']['allow_weak_random_seed']` | String  | nrpe.cfg parameter - whether to use pseudo random generator if /dev/[u]random unavailable | `1`
+`['opsview']['agent']['include_dirs']`           | List    | >nrpe.cfg parameter - List of include directories to scan for cfg files | `/usr/local/nagios/etc/nrpe_local`
+`['opsview']['agent']['include_files']`          | List    | nrpe.cfg parameter - List of additional cfg files to include | BLANK
+`['opsview']['agent']['default_commands']`       | Boolean | nrpe.cfg parameter - Whether to define the default check commands, such as check_load and check_disk | `true`
+`['opsview']['agent']['manage_config']`          | Boolean | Chef will manage the configuration file from the cookbook template. When false, will only create the file if it is missing. | `true`
 
 #### opsview_client::setup_windows_agent
-<table>
-  <tr>
-    <th>Key</th>
-    <th>Type</th>
-    <th>Description</th>
-    <th>Default</th>
-  </tr>
-  <tr>
-    <td><tt>['opsview']['agent']['x64']['url']</tt></td>
-    <td>String</td>
-    <td>Download URL or local source for the 64-bit Install MSI file</td>
-    <td><a href="https://s3.amazonaws.com/opsview-agents/Windows/Opsview_Windows_Agent_x64_28-01-15-1600.msi">Opsview_Windows_Agent_x64_28-01-15-1600.msi</a></td>
-  </tr>
-  <tr>
-    <td><tt>['opsview']['agent']['Win32']['url']</tt></td>
-    <td>String</td>
-    <td>Download URL or local source for the 32-bit Install MSI file</td>
-    <td><a href="https://s3.amazonaws.com/opsview-agents/Windows/Opsview_Windows_Agent_Win32_28-01-15-1559.msi">Opsview_Windows_Agent_Win32_28-01-15-1559.msi</a></td>
-  </tr>
-  <tr>
-    <td><tt>['opsview']['agent']['windows_conf_dir']</tt></td>
-    <td>String</td>
-    <td>Directory where the opsview-agent config files are</td>
-    <td><tt>C:\Program Files\Opsview Agent</tt></td>
-  </tr>
-  <tr>
-    <td><tt>['opsview']['agent']['manage_ncslient_config']</tt></td>
-    <td>Boolean</td>
-    <td>Chef will manage the configuration file from the cookbook template. When false, will only create the file if it is missing.</td>
-    <td><tt>true</tt></td>
-  </tr>
-</table>
+ Key                                             | Type    | Description                                                  | Default        
+-------------------------------------------------|---------|--------------------------------------------------------------|----------------
+`['opsview']['agent']['x64']['url']`             | String  | Download URL or local source for the 64-bit Install MSI file | `[Opsview_Windows_Agent_x64_28-01-15-1600.msi](https://s3.amazonaws.com/opsview-agents/Windows/Opsview_Windows_Agent_x64_28-01-15-1600.msi)`
+`['opsview']['agent']['Win32']['url']`           | String  | Download URL or local source for the 32-bit Install MSI file | `[Opsview_Windows_Agent_Win32_28-01-15-1559.msi](https://s3.amazonaws.com/opsview-agents/Windows/Opsview_Windows_Agent_Win32_28-01-15-1559.msi)`
+`['opsview']['agent']['windows_conf_dir']`       | String  | Directory where the opsview-agent config files are           | `C:\Program Files\Opsview Agent`
+`['opsview']['agent']['manage_ncslient_config']` | Boolean | Chef will manage the configuration file from the cookbook template. When false, will only create the file if it is missing. | `true`
 
 Usage
 -----
@@ -280,7 +112,7 @@ Contributing
 License and Authors
 -------------------
 Authors:
-  * Rob Coward
+  * Rob Coward (rob@coward-family.net)
   * Tenyo Grozev (tenyo.grozev@yale.edu)
 
 Copyright 2015 New Voice Media
