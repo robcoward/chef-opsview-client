@@ -44,8 +44,8 @@ Attributes
 #### opsview_client::setup_windows_agent
  Key                                             | Type    | Description                                                  | Default        
 -------------------------------------------------|---------|--------------------------------------------------------------|----------------
-`['opsview']['agent']['x64']['url']`             | String  | Download URL or local source for the 64-bit Install MSI file | `[Opsview_Windows_Agent_x64_28-01-15-1600.msi](https://s3.amazonaws.com/opsview-agents/Windows/Opsview_Windows_Agent_x64_28-01-15-1600.msi)`
-`['opsview']['agent']['Win32']['url']`           | String  | Download URL or local source for the 32-bit Install MSI file | `[Opsview_Windows_Agent_Win32_28-01-15-1559.msi](https://s3.amazonaws.com/opsview-agents/Windows/Opsview_Windows_Agent_Win32_28-01-15-1559.msi)`
+`['opsview']['agent']['x64']['url']`             | String  | Download URL or local source for the 64-bit Install MSI file | [Opsview_Windows_Agent_x64_28-01-15-1600.msi](https://s3.amazonaws.com/opsview-agents/Windows/Opsview_Windows_Agent_x64_28-01-15-1600.msi)
+`['opsview']['agent']['Win32']['url']`           | String  | Download URL or local source for the 32-bit Install MSI file | [Opsview_Windows_Agent_Win32_28-01-15-1559.msi](https://s3.amazonaws.com/opsview-agents/Windows/Opsview_Windows_Agent_Win32_28-01-15-1559.msi)
 `['opsview']['agent']['windows_conf_dir']`       | String  | Directory where the opsview-agent config files are           | `C:\Program Files\Opsview Agent`
 `['opsview']['agent']['manage_ncslient_config']` | Boolean | Chef will manage the configuration file from the cookbook template. When false, will only create the file if it is missing. | `true`
 
