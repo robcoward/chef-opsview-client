@@ -3,6 +3,10 @@ opsview_client CHANGELOG
 
 This file is used to list changes made in each version of the opsview_client cookbook.
 
+1.0.1
+-----
+- Rob Coward - Removed version contraints from metadata.rb to allow newer versions to be used.
+
 1.0.0
 -----
 - Rob Coward - Added Windows Agent installation and code tidy up read for release to Supermarket
