@@ -3,6 +3,10 @@ opsview_client CHANGELOG
 
 This file is used to list changes made in each version of the opsview_client cookbook.
 
+1.0.2
+-----
+- Tenyo Grozev - Add flush_cache to package installation in setup_rhel_agent.rb
+
 1.0.1
 -----
 - Rob Coward - Removed version contraints from metadata.rb to allow newer versions to be used.
