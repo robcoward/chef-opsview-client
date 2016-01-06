@@ -20,10 +20,10 @@
 # build-essential sets up prereqs for chef_gem
 include_recipe 'build-essential::default'
 chef_gem 'rest-client' do
-    compile_time true if Chef::Resource::ChefGem.instance_methods(false).include?(:compile_time)
+    compile_time true if Chef::Resource::ChefGem.instance_methods(false).include?(:compile_time) ~FC009
 end
 chef_gem 'hashdiff' do
-    compile_time true if Chef::Resource::ChefGem.instance_methods(false).include?(:compile_time)
+    compile_time true if Chef::Resource::ChefGem.instance_methods(false).include?(:compile_time) ~FC009
 end
 
 # install the appropriate Opsview agent
