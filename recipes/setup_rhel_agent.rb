@@ -35,11 +35,11 @@ end
 
 # Install packages
 node['opsview']['agent']['packages'].each do |pkg,ver|
-  package pkg do
+  package pkg do #~FC009
     action :install
     version ver if ver
     options '--nogpgcheck'
-    flush_cache before: true if respond_to?(:flush_cache) ~FC009
+    flush_cache before: true if respond_to?(:flush_cache) 
   end
 end
 

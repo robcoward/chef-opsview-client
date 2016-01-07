@@ -3,6 +3,10 @@ opsview_client CHANGELOG
 
 This file is used to list changes made in each version of the opsview_client cookbook.
 
+1.0.5
+-----
+- Martin Lewis - Guarded against flush_cache method not present in earlier versions of chef-client.
+
 1.0.2
 -----
 - Tenyo Grozev - Add flush_cache to package installation in setup_rhel_agent.rb
