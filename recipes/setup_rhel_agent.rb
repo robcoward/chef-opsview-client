@@ -35,7 +35,8 @@ end
 
 # Install packages
 node['opsview']['agent']['packages'].each do |pkg,ver|
-  package pkg do #~FC009
+  yum_package pkg do #~FC009
+    allow_downgrade node['yum']['yum_package']['allow_downgrade']
     action :install
     version ver if ver
     options '--nogpgcheck'

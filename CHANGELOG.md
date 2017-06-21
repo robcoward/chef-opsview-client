@@ -2,6 +2,10 @@ opsview_client CHANGELOG
 ========================
 
 This file is used to list changes made in each version of the opsview_client cookbook.
+1.0.6
+-----
+- Martin Lewis - Changed package resource to yum_package to allow package downgrade of opsview agent.
+- Default is false and can be controlled via attribute default['yum']['yum_package']['allow_downgrade']
 
 1.0.5
 -----

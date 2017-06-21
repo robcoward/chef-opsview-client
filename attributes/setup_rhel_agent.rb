@@ -15,6 +15,8 @@ default['yum']['opsview-core']['gpgkey'] = nil
 default['yum']['opsview-core']['repositoryid'] = 'opsview-core'
 default['yum']['opsview-core']['description'] = 'Opsview Core - $basearch'
 
+default['yum']['yum_package']['allow_downgrade'] = false
+
 # specify which packages (and specific versions, if needed) to install
 default['opsview']['agent']['packages'] = {
   'libmcrypt' => nil,
